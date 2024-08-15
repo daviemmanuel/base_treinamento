@@ -85,6 +85,7 @@
                                 <span id="quantidade_carrinho" class="badge badge-primary">0</span>
                             </a>
                         </li>
+
                     <?php endif; ?>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"

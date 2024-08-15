@@ -12,8 +12,8 @@
 
 <a href="<?= base_url('loja/add_product'); ?>">Adicionar Produto</a>
 
-<table>
-    <thead>
+<table class="table table-bordered table-striped table-hover">
+    <thead class="thead-dark">
         <tr>
             <th>Nome</th>
             <th>Descrição</th>
@@ -32,9 +32,11 @@
                 <td><?= $produto['estoque']; ?></td>
                 <td><?= $produto['custo']; ?></td>
                 <td>
-                    <a href="<?= base_url('loja/edit_product/' . $produto['id_produto']); ?>">Editar</a>
+                    <a href="<?= base_url('loja/edit_product/' . $produto['id_produto']); ?>"
+                        class="btn btn-sm btn-warning">Editar</a>
                     <a href="<?= base_url('loja/delete_product/' . $produto['id_produto']); ?>"
-                        onclick="return confirm('Tem certeza que deseja deletar este produto?');">Deletar</a>
+                        onclick="return confirm('Tem certeza que deseja deletar este produto?');"
+                        class="btn btn-sm btn-danger">Deletar</a>
                 </td>
             </tr>
         <?php endforeach; ?>

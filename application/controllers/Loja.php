@@ -32,7 +32,13 @@ class Loja extends CI_Controller
 	{
 		$id_usuario = $this->session->userdata('id_usuario');
 		$data['produtos'] = $this->Produto_model->get_all_products_by_loja($id_usuario);
-		$this->load->view('lojaPaginaPrincipal', $data);
+		$data['tipo_acesso'] = $this->session->userdata('tipo_acesso');
+		$data['homeUrl'] = '/';
+		$data['nome_usuario'] = $this->session->userdata('nome_usuario');
+
+		$data['conteudo'] = $this->load->view('lojaPaginaPrincipal', $data, TRUE);
+
+		$this->load->view('template/index', $data);
 	}
 
 	// Método para adicionar um novo produto
@@ -43,6 +49,9 @@ class Loja extends CI_Controller
 		$this->form_validation->set_rules('preco', 'Preço', 'required|numeric');
 		$this->form_validation->set_rules('estoque', 'Estoque', 'required|integer');
 		$this->form_validation->set_rules('custo', 'Custo', 'required|numeric');
+		$data['title'] = 'Adicionar Produto';
+		$data['conteudo'] = $this->load->view('add_product_form', $data, TRUE); // Carrega o form dentro do layout
+		$this->load->view('template/index', $data); // Renderiza o layout principal com o form embutido
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->load->view('add_product_form');
@@ -70,6 +79,21 @@ class Loja extends CI_Controller
 		$this->form_validation->set_rules('preco', 'Preço', 'required|numeric');
 		$this->form_validation->set_rules('estoque', 'Estoque', 'required|integer');
 		$this->form_validation->set_rules('custo', 'Custo', 'required|numeric');
+
+
+		// Carrega os dados do produto pelo ID
+		$data['produto'] = $this->Produto_model->get_product_by_id($id_produto);
+
+		// Define o título da página
+		$data['title'] = 'Editar Produto';
+
+		// Carrega a view do formulário de edição dentro do layout
+		$data['conteudo'] = $this->load->view('edit_product_form', $data, true);
+
+		// Renderiza o layout principal com o conteúdo do formulário de edição embutido
+		$this->load->view('template/index', $data);
+
+
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['produto'] = $this->Produto_model->get_product_by_id($id_produto);

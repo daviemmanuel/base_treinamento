@@ -7,7 +7,7 @@ class Produto_model extends CI_Model
     // Obtém todos os produtos de uma loja específica
     public function get_all_products_by_loja($id_usuario_loja)
     {
-        $this->db->where('id_usuario_loja', $id_usuario_loja);
+
         return $this->db->get('produto')->result_array();
     }
 
@@ -36,4 +36,18 @@ class Produto_model extends CI_Model
         $this->db->where('id_produto', $id_produto);
         return $this->db->delete('produto');
     }
+
+    public function get_all_products()
+    {
+        $query = $this->db->get('produto');
+        return $query->result();
+    }
+
+
+
+
+
+
+
 }
+
