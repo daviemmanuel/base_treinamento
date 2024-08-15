@@ -17,7 +17,7 @@
                         <p><?= $produto->descricao; ?></p>
                         <p><strong>Preço:</strong> R$ <?= number_format($produto->preco, 2, ',', '.'); ?></p>
                         <p><strong>Estoque:</strong> <?= $produto->estoque; ?> unidades</p>
-                        <form action="<?= base_url('cliente/comprar') ?>" method="post">
+                        <form action="<?= base_url('cliente/comprar_produto') ?>" method="post">
                             <div class="form-group">
                                 <label for="quantidade_<?= $produto->id_produto; ?>">Quantidade:</label>
                                 <input type="number" name="quantidade" id="quantidade_<?= $produto->id_produto; ?>"

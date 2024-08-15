@@ -13,7 +13,7 @@ class Cliente extends CI_Controller
 	public function index()
 	{
 		/*$data['produtos'] = $this->Produto_model->get_all_products(); // Buscando todos os produtos
-											$this->load->view('clientePaginaPrincipal', $data); // Carregando a view*/
+																										$this->load->view('clientePaginaPrincipal', $data); // Carregando a view*/
 
 		$id_usuario = $this->session->userdata('id_usuario');
 		$data['produtos'] = $this->Produto_model->get_all_products();
@@ -32,20 +32,50 @@ class Cliente extends CI_Controller
 		$quantidade = $this->input->post('quantidade');
 
 		$produto = $this->Produto_model->get_product_by_id($id_produto);
+		print_r($produto);
 
-		if ($quantidade <= $produto->estoque) {
-			// Lógica para processar a compra
-			// Reduzir a quantidade no estoque e salvar a compra no banco de dados
-			$novo_estoque = $produto->estoque - $quantidade;
-			$this->Produto_model->update_estoque($id_produto, $novo_estoque);
-			// Código para registrar a compra
-			$this->session->set_flashdata('success', 'Compra realizada com sucesso!');
+		if ($quantidade <= $produto['estoque']) {
+			$data = array(
+				'id' => $produto['id_produto'],
+				'qty' => $quantidade,
+				'price' => $produto['preco'],
+				'name' => $produto['nome'],
+			);
+
+
+
+			// $this->cart->insert($data);
+
+			// $novo_estoque = $produto->estoque - $quantidade;
+			// $this->Produto_model->update_estoque($id_produto, $novo_estoque);
+
+			redirect('cliente');
 		} else {
-			$this->session->set_flashdata('error', 'Quantidade solicitada maior que o estoque disponível.');
+			$response = [
+				'cart_count' => $this->cart->total_items(),
+				'message' => 'Quantidade solicitada maior que o estoque disponível.'
+			];
 		}
 
-		redirect('cliente');
+		echo json_encode($response);
 	}
+
+	// 	$(document).on('submit', 'form', function(e) {
+//     e.preventDefault();
+
+	//     $.ajax({
+//         url: $(this).attr('action'),
+//         method: 'POST',
+//         data: $(this).serialize(),
+//         success: function(response) {
+//             response = JSON.parse(response);
+//             $('#quantidade_carrinho').text(response.cart_count); // Atualiza o contador do carrinho
+//             alert(response.message); // Mostra a mensagem de sucesso ou erro
+//         }
+//     });
+// });
+
+
 
 	// Controller: Cliente.php
 

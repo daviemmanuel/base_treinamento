@@ -60,6 +60,17 @@
     </script>
 </head>
 
+
+
+<!-- Script para atualizar o carrinho -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+</body>
+
+</html>
+
+
 <body>
     <?php if ($tipo_acesso != null): ?>
         <nav class="navbar navbar-default">
@@ -84,6 +95,10 @@
                                 <i id="icone_carrinho" class="glyphicon glyphicon-shopping-cart"></i>
                                 <span id="quantidade_carrinho" class="badge badge-primary">0</span>
                             </a>
+
+
+
+
                         </li>
 
                     <?php endif; ?>
@@ -112,3 +127,9 @@
 </body>
 
 </html>
+
+<!-- <a style="cursor: pointer;">
+                                <i id="icone_carrinho" class="glyphicon glyphicon-shopping-cart"></i>
+                                <span id="quantidade_carrinho"
+                                    class="badge badge-primary"><?= $this->cart->total_items(); ?></span>
+                            </a> -->

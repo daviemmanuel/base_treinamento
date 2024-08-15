@@ -49,12 +49,11 @@ class Loja extends CI_Controller
 		$this->form_validation->set_rules('preco', 'Preço', 'required|numeric');
 		$this->form_validation->set_rules('estoque', 'Estoque', 'required|integer');
 		$this->form_validation->set_rules('custo', 'Custo', 'required|numeric');
-		$data['title'] = 'Adicionar Produto';
-		$data['conteudo'] = $this->load->view('add_product_form', $data, TRUE); // Carrega o form dentro do layout
-		$this->load->view('template/index', $data); // Renderiza o layout principal com o form embutido
 
 		if ($this->form_validation->run() == FALSE) {
-			$this->load->view('add_product_form');
+			$data['title'] = 'Adicionar Produto';
+			$data['conteudo'] = $this->load->view('add_product_form', $data, TRUE); // Carrega o form dentro do layout
+			$this->load->view('template/index', $data); // Renderiza o layout principal com o form embutido
 		} else {
 			$id_usuario = $this->session->userdata('id_usuario'); // Obtém id_usuario da sessão
 			$productData = array(
@@ -71,6 +70,7 @@ class Loja extends CI_Controller
 		}
 	}
 
+
 	// Método para editar um produto existente
 	public function edit_product($id_produto)
 	{
@@ -80,25 +80,19 @@ class Loja extends CI_Controller
 		$this->form_validation->set_rules('estoque', 'Estoque', 'required|integer');
 		$this->form_validation->set_rules('custo', 'Custo', 'required|numeric');
 
-
 		// Carrega os dados do produto pelo ID
 		$data['produto'] = $this->Produto_model->get_product_by_id($id_produto);
 
 		// Define o título da página
 		$data['title'] = 'Editar Produto';
 
-		// Carrega a view do formulário de edição dentro do layout
-		$data['conteudo'] = $this->load->view('edit_product_form', $data, true);
-
-		// Renderiza o layout principal com o conteúdo do formulário de edição embutido
-		$this->load->view('template/index', $data);
-
-
-
 		if ($this->form_validation->run() == FALSE) {
-			$data['produto'] = $this->Produto_model->get_product_by_id($id_produto);
-			$this->load->view('edit_product_form', $data);
+			// Carrega a view do formulário de edição dentro do layout
+			$data['conteudo'] = $this->load->view('edit_product_form', $data, true);
+			// Renderiza o layout principal com o conteúdo do formulário de edição embutido
+			$this->load->view('template/index', $data);
 		} else {
+			// Atualiza os dados do produto
 			$productData = array(
 				'nome' => $this->input->post('nome'),
 				'descricao' => $this->input->post('descricao'),
@@ -111,6 +105,7 @@ class Loja extends CI_Controller
 			redirect('loja');
 		}
 	}
+
 
 	// Método para deletar um produto
 	public function delete_product($id_produto)
